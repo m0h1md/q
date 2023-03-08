@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Chat Box</title>
+  <style>
+    /* CSS styles for chat box */
+    #chat-box {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background-color: white;
+      border: 1px solid gray;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px gray;
+      overflow-y: auto;
+    }
+
+    #chat-box-header {
+      background-color: gray;
+      color: white;
+      font-weight: bold;
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    #chat-box-messages {
+      padding: 10px;
+    }
+
+    #chat-box-input {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      border-top: 1px solid gray;
+    }
+
+    #chat-box-input input[type=text] {
+      width: 80%;
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 2px 2px 5px gray;
+    }
+
+    #chat-box-input input[type=submit] {
+      width: 18%;
+      background-color: gray;
+      color: white;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 2px 2px 5px gray;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="chat-box">
+    <div id="chat-box-header">Live Chat</div>
+    <div id="chat-box-messages"></div>
+    <div id="chat-box-input">
+      <input type="text" placeholder="Type your message here...">
+      <input type="submit" value="Send">
+    </div>
+  </div>
+
+  <script>
+    // Get the chat box elements
+    var chatBox = document.getElementById("chat-box");
+    var messages = document.getElementById("chat-box-messages");
+    var input = document.querySelector("#chat-box-input input[type=text]");
+
+    // Function to add a message to the chat box
+    function addMessage(message, sender) {
+      var messageElement = document.createElement("div");
+      messageElement.classList.add("message");
+      if (sender === "user") {
+        messageElement.classList.add("user-message");
+      } else {
+        messageElement.classList.add("bot-message");
+      }
+      messageElement.innerText = message;
+      messages.appendChild(messageElement);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Function to send a message
+    function sendMessage() {
+      var message = input.value;
+      if (message.trim() !== "") {
+        addMessage(message, "user");
+        // Here you can add your code to process the user message
+        // and generate a response from the bot
+        // For example, you can use an API like Dialogflow or Wit.ai
+        // to process the user message and generate a response
+        // Here's an example of how you can generate a random response
+        var responses = [
+          "Hello!",
+          "How can I help you?",
+          "Sorry, I didn't understand that.",
+          "Please try again."
+        ];
+        var response = responses[Math.floor(Math.random() * responses.length)];
+        setTimeout(function() {
+          addMessage(response, "bot");
+        }, 1000);
+        input.value =
